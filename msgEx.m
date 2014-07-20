@@ -1,5 +1,13 @@
 function msgEx(Style,fmt,varargin)
-% msgEx(Style,fmt,varargin)
+% MSGEX prints formatted message
+%
+% Output includes date/time and caller name.
+% If caller from MatLAb worker (see matlabpool) the message also includes worker ID
+%
+% Syntax:
+%   msgEx('msg', format,data)
+%   msgEx('warn',format,data)
+%
 
 WorkerString            = '';
 try
@@ -15,20 +23,12 @@ end
 switch lower(Style)
     case {'warn','warning'},    Style = mat2str([1.0,0.5,0.0]/2);
     case {'msg','message'},     Style = mat2str([0.0,0.5,1.0]/2);
+    otherwise,                  Style = mat2str([0.5,0.5,0.5]/2);
 end
 
-ST                      = dbstack(1);
-fname                   = ST(1).file;
-if strcmpi( fname(end-1:end) , '.m' )
-    fname                   = fname(1:end-2);
-end
-fname = [fname ':'];
-% if ~isempty(WorkerString)
-%     fname = sprintf('%-40s',fname);
-% end
+[CallerFile,CallerName,CallerLine] = GetCallerFileFunctionLine;
 
 fprintf(' ');  % to avoid strange random colors
-%cprintf(Style, '%s %s%s: %s\n',datestr(now,'yyyy/mm/dd@HH:MM:SS.FFF'),fname,WorkerMsg,sprintf(fmt,varargin{:}));
-%cprintf(Style, '%s %s%s %s \n',datestr(now,'HH:MM:SS.FFF'),WorkerString,fname,sprintf(fmt,varargin{:}));
-cprintf(Style, '%s%s %s %s \n',WorkerString,datestr(now,'HH:MM:SS.FFF'),fname,sprintf(fmt,varargin{:}));
+cprintf(Style, '%s%s %s/%s@%d: %s\n',WorkerString,datestr(now,'HH:MM:SS.FFF'),CallerFile,CallerName,CallerLine,sprintf(fmt,varargin{:}));
+
 end

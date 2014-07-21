@@ -32,6 +32,10 @@ if ~isempty(ST)
 file                = ST(1).file;
 name                = ST(1).name;
 line                = ST(1).line;
+pos                 = strfind(name,'/');
+if ~isempty(pos)
+name                = name(pos(end)+1:end);
+end
 end
 
 if ReturnStructure

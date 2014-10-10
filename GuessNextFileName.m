@@ -1,5 +1,4 @@
 function [FileName,FileNum] = GuessNextFileName(Prefix,Fmt)
-
 % Returns file name built by prefix, formatted number, dot, format (extension)
 % As long as the file name exists, file number is internally sequentially
 % incremented until first non-existing name is found.

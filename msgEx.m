@@ -30,7 +30,7 @@ end
 
 [CallerFile,CallerName,CallerLine] = GetCallerFileFunctionLine;
 
-fprintf(' %s %s%s <a href="matlab: opentoline(''%s'',%d)">%s@%d</a>: %s\n',Prefix,WorkerString,datestr(now,'HH:MM:SS.FFF'), CallerFile,CallerLine, CallerName,CallerLine, sprintf(fmt,varargin{:}));
+fprintf(' %s %s%s <a href="matlab: opentoline(''%s'',%d)">%s@%04d</a>: %s\n',Prefix,WorkerString,datestr(now,'HH:MM:SS.FFF'), CallerFile,CallerLine, CallerName,CallerLine, sprintf(fmt,varargin{:}));
 
 end
 
